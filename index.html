@@ -75,15 +75,12 @@
 			document.querySelector("form#options").onsubmit = (e) => {
 				e.preventDefault();
 
-				window.location =
-					window.location +
-					`/physarum/index.html?cells=${
-						e.target.cells.value
-					}&resolution=${
-						document.querySelector(
-							"input[name='resolution']:checked"
-						).value
-					}`;
+				window.location.href = `physarum/index.html?cells=${
+					e.target.cells.value
+				}&resolution=${
+					document.querySelector("input[name='resolution']:checked")
+						.value
+				}`;
 			};
 		</script>
 	</body>
