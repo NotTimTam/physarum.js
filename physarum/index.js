@@ -168,7 +168,7 @@ class Node {
 
 	rotate(targetAngle, set = false) {
 		if (set) this.angle = targetAngle;
-		this.angle += targetAngle;
+		else this.angle += targetAngle;
 		this.angle = (this.angle % 360) + 360;
 	}
 
@@ -200,6 +200,20 @@ class Node {
 		if (this.y + this.size >= canvas.height) {
 			this.y = canvas.height - this.size;
 			this.rotate(180 - this.angle, true);
+		}
+
+		if (rend.mouseDown) {
+			this.rotate(
+				Mathf.angleBetweenPoints(
+					this.x,
+					this.y,
+					rend.mousePosition[0],
+					rend.mousePosition[1]
+				) + Mathf.range(-45, 45),
+				true
+			);
+
+			this.velocity = this.maxVel * 4;
 		}
 
 		// Update position.
@@ -274,10 +288,32 @@ class Renderer {
 		this.__resize();
 		window.addEventListener("resize", this.__resize);
 
+		// Input.
+		this.mouseDown = false;
+		this.mousePosition = [0, 0];
+
 		// Create nodes.
 		for (let i = 0; i < nodeCount; i++) {
 			this.__createNode();
 		}
+
+		window.addEventListener("mousedown", () => {
+			this.mouseDown = true;
+		});
+
+		window.addEventListener("mouseup", () => {
+			this.mouseDown = false;
+		});
+
+		window.addEventListener("mousemove", (e) => {
+			const rect = this.canvas.getBoundingClientRect();
+			this.mousePosition = [
+				((e.clientX - rect.left) / (rect.right - rect.left)) *
+					this.canvas.width,
+				((e.clientY - rect.top) / (rect.bottom - rect.top)) *
+					this.canvas.height,
+			];
+		});
 	}
 
 	__get_color = (x, y) => {
