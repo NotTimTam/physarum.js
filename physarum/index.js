@@ -239,7 +239,7 @@ class Node {
 }
 
 class Renderer {
-	constructor() {
+	constructor(targetResolution = window.innerWidth / 1.5, nodeCount = 1000) {
 		this.canvas = document.querySelector("canvas#slime");
 		if (!this.canvas) {
 			this.canvas = document.createElement("canvas");
@@ -264,13 +264,18 @@ class Renderer {
 
 		// Rendering settings.
 		this.diffusionSpeed = 4;
+		const minRes = 400;
+		const maxRes = 1000;
+		this.resTarget = targetResolution;
+		if (this.resTarget < minRes) this.resTarget = minRes;
+		if (this.resTarget > maxRes) this.resTarget = maxRes;
 
 		// Event bindings.
 		this.__resize();
 		window.addEventListener("resize", this.__resize);
 
 		// Create nodes.
-		for (let i = 0; i < 1000; i++) {
+		for (let i = 0; i < nodeCount; i++) {
 			this.__createNode();
 		}
 	}
@@ -306,8 +311,7 @@ class Renderer {
 	};
 
 	__resize = () => {
-		const { canvas } = this;
-		const resTarget = 500;
+		const { canvas, resTarget } = this;
 
 		this.canvas.width = resTarget;
 		this.canvas.height =
@@ -356,4 +360,14 @@ class Renderer {
 	};
 }
 
-const rend = new Renderer();
+let [cells, resolution] = window.location.search.replace("?", "").split("&");
+cells = +cells.split("=")[1];
+resolution = resolution.split("=")[1];
+resolution =
+	resolution === "win"
+		? window.innerWidth
+		: resolution === "win2"
+		? window.innerWidth / 1.5
+		: 400;
+
+const rend = new Renderer(resolution, cells < 3000 ? cells : 3000);

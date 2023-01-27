@@ -1,12 +1,57 @@
-canvas#slime {
-	width: 100vw;
-	height: 100vh;
+body,
+html {
+	overflow: hidden;
+	background-color: black;
 
+	color: white;
+
+	font-family: "Courier New", Courier, monospace;
+}
+
+form {
 	position: absolute;
-	top: 0;
-	left: 0;
-	background: black;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 
-	/* image-rendering: pixelated;
-	image-rendering: crisp-edges; */
+	border: 1px solid white;
+	border-radius: 4px;
+	padding: 1rem;
+
+	height: max-content;
+	width: 300px;
+	max-width: 95vw;
+	max-height: 95vh;
+
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+ul li {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+form button {
+	align-self: flex-end;
+	padding: 0.5rem 1rem;
 }

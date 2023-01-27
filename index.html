@@ -9,8 +9,82 @@
 		<link rel="stylesheet" href="index.css" />
 	</head>
 	<body>
-		<canvas id="slime"></canvas>
+		<form id="options">
+			<h4>Resolution</h4>
+			<ul>
+				<li>
+					<input
+						type="radio"
+						id="400"
+						name="resolution"
+						value="400"
+					/>
+					<label for="400">400 (Performance)</label>
+				</li>
+				<li>
+					<input
+						type="radio"
+						id="win2"
+						name="resolution"
+						value="win2"
+						checked="true"
+					/>
+					<label for="win2">Window / 2 (SD)</label>
+				</li>
 
-		<script src="index.js"></script>
+				<li>
+					<input
+						type="radio"
+						id="win"
+						name="resolution"
+						value="win"
+					/>
+					<label for="win">Window (HD)</label>
+				</li>
+			</ul>
+
+			<h4>Cell Count</h4>
+			<ul>
+				<li>
+					<input
+						type="range"
+						name="cells"
+						id="cells"
+						min="1000"
+						max="3000"
+						step="10"
+						value="1000"
+					/>
+					<label for="cells" id="cell-label">1000</label>
+				</li>
+			</ul>
+
+			<button type="submit">Start Simulation</button>
+		</form>
+
+		<script>
+			document.querySelector("label#cell-label").innerText =
+				document.querySelector("input#cells").value;
+			document
+				.querySelector("input#cells")
+				.addEventListener("input", (e) => {
+					document.querySelector("label#cell-label").innerText =
+						e.target.value;
+				});
+
+			document.querySelector("form#options").onsubmit = (e) => {
+				e.preventDefault();
+
+				window.location =
+					window.origin +
+					`/physarum/index.html?cells=${
+						e.target.cells.value
+					}&resolution=${
+						document.querySelector(
+							"input[name='resolution']:checked"
+						).value
+					}`;
+			};
+		</script>
 	</body>
 </html>
