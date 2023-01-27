@@ -265,7 +265,7 @@ class Renderer {
 		// Rendering settings.
 		this.diffusionSpeed = 4;
 		const minRes = 400;
-		const maxRes = 1000;
+		const maxRes = 1920;
 		this.resTarget = targetResolution;
 		if (this.resTarget < minRes) this.resTarget = minRes;
 		if (this.resTarget > maxRes) this.resTarget = maxRes;
